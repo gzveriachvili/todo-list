@@ -43,6 +43,7 @@ const UI = (() => {
 
     const addTaskBtn = document.createElement('button');
     addTaskBtn.classList.add('add-task-button');
+    addTaskBtn.setAttribute('id', 'taskModalBtn');
     addTaskBtn.textContent = '+ Add new task';
 
     sideBar.appendChild(sideTop);
@@ -54,12 +55,15 @@ const UI = (() => {
     projectTop.classList.add('project-top');
     const projectTopTitle = document.createElement('h3');
     projectTopTitle.textContent = 'Projects';
+    const addProjectWrapper = document.createElement('div');
+    addProjectWrapper.setAttribute('id', 'projectModalBtn');
     const addProjectBtn = document.createElement('i');
     addProjectBtn.classList.add('fas');
     addProjectBtn.classList.add('fa-plus-circle');
+    addProjectWrapper.appendChild(addProjectBtn);
 
     projectTop.appendChild(projectTopTitle);
-    projectTop.appendChild(addProjectBtn);
+    projectTop.appendChild(addProjectWrapper);
 
     projectSection.appendChild(projectTop);
 
@@ -74,9 +78,97 @@ const UI = (() => {
     content.appendChild(page);
   };
 
+  const createTaskModal = () => {
+    const taskModal = document.createElement('div');
+    taskModal.innerHTML = `
+    <div id="taskModal" class="task-modal">
+    <!-- Modal content -->
+    <div class="task-modal-content">
+        <div class="task-modal-top">
+            <h3>Add new task</h3>
+            <span class="task-close">&times;</span>
+        </div>
+    </div>
+  </div>`;
+    content.appendChild(taskModal);
+  };
+
+  const createProjectModal = () => {
+    const projectModal = document.createElement('div');
+    projectModal.innerHTML = `
+    <div id="projectModal" class="project-modal">
+    <!-- Modal content -->
+    <div class="project-modal-content">
+        <div class="project-modal-top">
+            <h3>new project</h3>
+            <span class="project-close">&times;</span>
+        </div>
+    </div>
+  </div>`;
+    content.appendChild(projectModal);
+  };
+
+  const taskModalListener = () => {
+    const modal = document.querySelector('#taskModal');
+    const modalContent = document.querySelector('.task-modal-content');
+
+    const btn = document.querySelector('#taskModalBtn');
+
+    const span = document.querySelector('.task-close');
+
+    btn.addEventListener('click', () => {
+      modal.style.display = 'block';
+      modalContent.classList.add('modal-animation-t');
+    });
+
+    span.addEventListener('click', () => {
+      modal.style.display = 'none';
+      modalContent.classList.remove('modal-animation-t');
+    });
+
+    window.addEventListener('click', () => {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+        modalContent.classList.remove('modal-animation-t');
+      }
+    });
+  };
+
+  const projectModalListener = () => {
+    const modal = document.querySelector('#projectModal');
+    const modalContent = document.querySelector('.project-modal-content');
+
+    const btn = document.querySelector('#projectModalBtn');
+
+    const span = document.querySelector('.project-close');
+
+    btn.addEventListener('click', () => {
+      modal.style.display = 'block';
+      modalContent.classList.add('modal-animation-p');
+    });
+
+    span.addEventListener('click', () => {
+      modal.style.display = 'none';
+      modalContent.classList.remove('modal-animation-p');
+    });
+
+    window.addEventListener('click', () => {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+        modalContent.classList.remove('modal-animation-p');
+      }
+    });
+  };
+
   const renderUI = () => {
     createHeader();
     createPage();
+
+    createTaskModal();
+    taskModalListener();
+
+    createProjectModal();
+    projectModalListener();
   };
 
   return { renderUI };

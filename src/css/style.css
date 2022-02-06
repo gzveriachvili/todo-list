@@ -92,7 +92,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0px 35px 8px 35px;
+  padding: 10px 35px 8px 35px;
   font-size: 20px;
   column-gap: 10px;
   border-bottom: 2px solid rgb(189, 189, 189);
@@ -106,9 +106,95 @@ body {
 .project-top svg {
   color: #ff6575;
   transition: 0.5s;
+  pointer-events: auto;
 }
 
 .project-top svg:hover {
   cursor: pointer;
   transform: rotate(180deg);
+}
+
+.task-modal,
+.project-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal Content */
+.task-modal-content,
+.project-modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  border-radius: 8px;
+}
+
+/* The Close Button */
+.task-close,
+.project-close {
+  color: #aaaaaa;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.task-close:hover,
+.task-close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.project-close:hover,
+.project-close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.task-modal-top,
+.project-modal-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@keyframes modal-animate-t {
+  0% {
+    transform: translateX(-100%) scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0%) scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-animation-t {
+  animation: modal-animate-t 0.4s linear;
+}
+
+@keyframes modal-animate-p {
+  0% {
+    transform: translateX(-100%) translateY(110%) scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0%) translateY(0%) scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-animation-p {
+  animation: modal-animate-p 0.4s linear;
 }
