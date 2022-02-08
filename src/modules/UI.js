@@ -1,4 +1,5 @@
 import '../css/style.css';
+import { projects, canInput } from './project';
 import '@fortawesome/fontawesome-free/js/fontawesome';
 import '@fortawesome/fontawesome-free/js/solid';
 import '@fortawesome/fontawesome-free/js/regular';
@@ -82,11 +83,30 @@ const UI = (() => {
     const taskModal = document.createElement('div');
     taskModal.innerHTML = `
     <div id="taskModal" class="task-modal">
-    <!-- Modal content -->
     <div class="task-modal-content">
         <div class="task-modal-top">
             <h3>Add new task</h3>
             <span class="task-close">&times;</span>
+        </div>
+        <div class="task-modal-input>
+          <form>
+            <label for="tname">Task name:</label><br>
+            <input type="text" id="tname" name="tname"><br>
+            <label for="duedate">Due date:</label><br>
+            <input type="date" id="dudedate" name="due-date" value="2022-07-22"><br>
+            <label for="cars">Choose a project:</label><br>
+              <select name="projects-option" id="projects-option">
+                
+              </select><br>
+              <p>Select priority:</p>
+                <input type="radio" id="low" name="low_prio" value="LOW">
+                <label for="low">Low</label>
+                <input type="radio" id="mid" name="mid_prio" value="MID">
+                <label for="mid">Mid</label>
+                <input type="radio" id="high" name="high_prio" value="HIGH">
+                <label for="high">High</label><br>
+            <input id="submitTask" type="submit" value="Add new task">
+          </form>
         </div>
     </div>
   </div>`;
@@ -97,11 +117,17 @@ const UI = (() => {
     const projectModal = document.createElement('div');
     projectModal.innerHTML = `
     <div id="projectModal" class="project-modal">
-    <!-- Modal content -->
     <div class="project-modal-content">
         <div class="project-modal-top">
-            <h3>new project</h3>
+            <h3>Add new project</h3>
             <span class="project-close">&times;</span>
+        </div>
+        <div class="project-modal-input>
+          <form>
+            <label for="pname">Project name:</label><br>
+            <input type="text" id="pname" name="pname"><br>
+            <input id="submitProject" type="submit" value="Add project">
+        </form>
         </div>
     </div>
   </div>`;
@@ -160,6 +186,48 @@ const UI = (() => {
     });
   };
 
+  const displayProjectList = () => {
+    const projectContainer = document.querySelector('.projects');
+    const projectList = document.createElement('div');
+    projectList.classList.add('project-list');
+    for (let i = 0; i <= projects.length - 1; i++) {
+      const project = document.createElement('p');
+      project.setAttribute('data-index', `${i}`);
+      project.innerHTML = `${projects[i]} <span class="delete-project" data-index-delete=${i}>x</span>`;
+      projectList.appendChild(project);
+    }
+    projectContainer.appendChild(projectList);
+  };
+
+  const createProjectOption = () => {
+    const projectOption = document.querySelector('#projects-option');
+    const newOption = document.createElement('option');
+    newOption.setAttribute('value', `${projects[projects.length - 1]}`);
+    newOption.textContent = projects[projects.length - 1];
+    projectOption.appendChild(newOption);
+  };
+
+  const addToProjectList = () => {
+    const newProjectBtn = document.querySelector('#submitProject');
+    let dataIndex = 2;
+
+    newProjectBtn.addEventListener('click', () => {
+      const projectList = document.querySelector('.project-list');
+
+      if (canInput) {
+        const project = document.createElement('p');
+        project.setAttribute('data-index', `${dataIndex}`);
+        project.innerHTML = `${
+          projects[projects.length - 1]
+        } <span class="delete-project" data-index-delete=${dataIndex}>x</span>`;
+        projectList.appendChild(project);
+        dataIndex++;
+
+        createProjectOption();
+      }
+    });
+  };
+
   const renderUI = () => {
     createHeader();
     createPage();
@@ -169,9 +237,11 @@ const UI = (() => {
 
     createProjectModal();
     projectModalListener();
+
+    displayProjectList();
   };
 
-  return { renderUI };
+  return { renderUI, addToProjectList };
 })();
 
 export { UI };

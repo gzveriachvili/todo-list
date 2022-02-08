@@ -6,6 +6,22 @@
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 body {
   font-family: 'Montserrat', sans-serif;
   height: 100%;
@@ -77,10 +93,12 @@ body {
   color: #fff;
   border-radius: 30px;
   font-size: 15px;
+  transition: 0.3s;
 }
 
 .add-task-button:hover {
   cursor: pointer;
+  background: #080052;
 }
 
 .projects {
@@ -134,10 +152,38 @@ body {
 .project-modal-content {
   background-color: #fefefe;
   margin: auto;
-  padding: 20px;
+  padding: 5px 15px 15px 15px;
   border: 1px solid #888;
   width: 50%;
   border-radius: 8px;
+}
+
+.project-modal-content {
+  width: 30%;
+}
+
+#pname {
+  border-radius: 5px;
+  width: 100%;
+  border: none;
+  background: #e6e6e6;
+  height: 30px;
+  margin: 5px 0px 10px 0px;
+}
+
+#submitProject {
+  color: #fff;
+  background: #ff5969;
+  border: none;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 17px;
+  padding: 2px 0px 2px 0px;
+}
+
+#submitProject:hover {
+  cursor: pointer;
+  background: #ff4e5f;
 }
 
 /* The Close Button */
@@ -197,4 +243,33 @@ body {
 
 .modal-animation-p {
   animation: modal-animate-p 0.4s linear;
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  font-size: 20px;
+  overflow-y: auto;
+  height: 300px;
+}
+
+.project-list p {
+  padding: 5px 15px 5px 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.project-list p:hover {
+  cursor: pointer;
+  background: rgb(240, 240, 240);
+}
+
+.project-list .delete-project {
+  font-weight: 500;
+}
+
+.project-list .delete-project:hover {
+  color: #fc3246;
+  font-weight: 600;
 }
