@@ -8,10 +8,10 @@ const Project = (title, taskList) => {
 let projects = [];
 let canInput = false;
 
-const defaultProject1 = Project('Default 1', ['task1']);
-const defaultProject2 = Project('Default 2', []);
-projects.push(defaultProject1.getTitle());
-projects.push(defaultProject2.getTitle());
+const defaultProject1 = Project('Default 1', ['task1, task2']);
+const defaultProject2 = Project('Default 2', ['task1']);
+projects.push(defaultProject1);
+projects.push(defaultProject2);
 
 function addNewProject() {
   const newProjectBtn = document.querySelector('#submitProject');
@@ -23,7 +23,7 @@ function addNewProject() {
     function clickAdd() {
       const newProject = Project(projectInput.value, ['task1', 'task2']);
       if (projectInput.value !== '') {
-        projects.push(newProject.getTitle());
+        projects.push(newProject);
         projectInput.value = '';
         modal.style.display = 'none';
         canInput = true;
@@ -41,15 +41,23 @@ function displayProjectOptions() {
   const projectOption = document.querySelector('#projects-option');
   for (let i = 0; i <= projects.length - 1; i++) {
     const newOption = document.createElement('option');
-    newOption.setAttribute('value', `${projects[i]}`);
-    newOption.textContent = projects[i];
+    newOption.setAttribute('value', `${projects[i].getTitle()}`);
+    newOption.setAttribute('data-index-option', `${i}`);
+    newOption.textContent = projects[i].getTitle();
     projectOption.appendChild(newOption);
   }
 }
 
-function deleteProjectOption() {
+function deleteProjectOption(index) {
   const projectOption = document.querySelector('#projects-option');
-  projectOption.removeChild();
+  for (const option of projectOption) {
+    // The option items have their own data attribute,
+    // which then if matches with the data attribute from the project listen upon deletion,
+    // the option gets deleted as well from the task input modal.
+    if (option.getAttribute('data-index-option') == index) {
+      projectOption.removeChild(option);
+    }
+  }
 }
 
 function deleteProject() {
@@ -62,7 +70,7 @@ function deleteProject() {
       console.log(itemIndex);
       console.log(projects);
       projectList.removeChild(e.path[1]);
-      deleteProjectOption();
+      deleteProjectOption(itemIndex);
     }
   });
 }

@@ -93,18 +93,26 @@ const UI = (() => {
             <label for="tname">Task name:</label><br>
             <input type="text" id="tname" name="tname"><br>
             <label for="duedate">Due date:</label><br>
-            <input type="date" id="dudedate" name="due-date" value="2022-07-22"><br>
+            <input type="date" id="duedate" name="due-date" value="2022-07-22"><br>
             <label for="cars">Choose a project:</label><br>
               <select name="projects-option" id="projects-option">
                 
               </select><br>
               <p>Select priority:</p>
-                <input type="radio" id="low" name="low_prio" value="LOW">
-                <label for="low">Low</label>
-                <input type="radio" id="mid" name="mid_prio" value="MID">
-                <label for="mid">Mid</label>
-                <input type="radio" id="high" name="high_prio" value="HIGH">
-                <label for="high">High</label><br>
+                <div id="priority-radio">
+                  <div class="low-radio">
+                    <input type="radio" id="low" name="fav_language" value="HTML">
+                    <label for="html">Low</label>
+                  </div>
+                  <div class="mid-radio">
+                    <input type="radio" id="mid" name="fav_language" value="CSS">
+                    <label for="css">Mid</label>
+                  </div>
+                  <div class="high-radio">
+                    <input type="radio" id="high" name="fav_language" value="JavaScript">
+                    <label for="javascript">High</label><br>
+                  </div>
+                </div>        
             <input id="submitTask" type="submit" value="Add new task">
           </form>
         </div>
@@ -193,23 +201,29 @@ const UI = (() => {
     for (let i = 0; i <= projects.length - 1; i++) {
       const project = document.createElement('p');
       project.setAttribute('data-index', `${i}`);
-      project.innerHTML = `${projects[i]} <span class="delete-project" data-index-delete=${i}>x</span>`;
+      project.innerHTML = `${projects[i].getTitle()} 
+                          <span class="delete-project" data-index-delete=${i}>x</span>`;
       projectList.appendChild(project);
     }
     projectContainer.appendChild(projectList);
   };
 
+  let dataIndex = 2;
+
   const createProjectOption = () => {
     const projectOption = document.querySelector('#projects-option');
     const newOption = document.createElement('option');
-    newOption.setAttribute('value', `${projects[projects.length - 1]}`);
-    newOption.textContent = projects[projects.length - 1];
+    newOption.setAttribute(
+      'value',
+      `${projects[projects.length - 1].getTitle()}`
+    );
+    newOption.setAttribute('data-index-option', `${dataIndex}`);
+    newOption.textContent = projects[projects.length - 1].getTitle();
     projectOption.appendChild(newOption);
   };
 
   const addToProjectList = () => {
     const newProjectBtn = document.querySelector('#submitProject');
-    let dataIndex = 2;
 
     newProjectBtn.addEventListener('click', () => {
       const projectList = document.querySelector('.project-list');
@@ -217,13 +231,11 @@ const UI = (() => {
       if (canInput) {
         const project = document.createElement('p');
         project.setAttribute('data-index', `${dataIndex}`);
-        project.innerHTML = `${
-          projects[projects.length - 1]
-        } <span class="delete-project" data-index-delete=${dataIndex}>x</span>`;
+        project.innerHTML = `${projects[projects.length - 1].getTitle()} 
+                            <span class="delete-project" data-index-delete=${dataIndex}>x</span>`;
         projectList.appendChild(project);
-        dataIndex++;
-
         createProjectOption();
+        dataIndex++;
       }
     });
   };

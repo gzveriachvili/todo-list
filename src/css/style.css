@@ -147,7 +147,6 @@ body {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-/* Modal Content */
 .task-modal-content,
 .project-modal-content {
   background-color: #fefefe;
@@ -162,23 +161,82 @@ body {
   width: 30%;
 }
 
-#pname {
+#pname,
+#tname,
+#duedate,
+#projects-option,
+#priority-radio {
   border-radius: 5px;
   width: 100%;
   border: none;
   background: #e6e6e6;
   height: 30px;
+  padding: 2px 5px 2px 5px;
   margin: 5px 0px 10px 0px;
 }
 
-#submitProject {
+#priority-radio {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.low-radio input[type='radio']:after,
+.mid-radio input[type='radio']:after,
+.high-radio input[type='radio']:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: #aaaaaa;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid white;
+}
+
+.low-radio input[type='radio']:checked:after,
+.mid-radio input[type='radio']:checked:after,
+.high-radio input[type='radio']:checked:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid white;
+}
+
+.low-radio input[type='radio']:checked:after {
+  background-color: #22ff1b;
+}
+
+.mid-radio input[type='radio']:checked:after {
+  background-color: #ffc21b;
+}
+
+.high-radio input[type='radio']:checked:after {
+  background-color: #ff280b;
+}
+
+#submitProject,
+#submitTask {
   color: #fff;
   background: #ff5969;
   border: none;
   width: 100%;
   border-radius: 5px;
   font-size: 17px;
-  padding: 2px 0px 2px 0px;
+  padding: 3px 0px 3px 0px;
+}
+
+#submitTask {
+  background: #050036;
 }
 
 #submitProject:hover {
@@ -186,7 +244,11 @@ body {
   background: #ff4e5f;
 }
 
-/* The Close Button */
+#submitTask:hover {
+  cursor: pointer;
+  background: #080052;
+}
+
 .task-close,
 .project-close {
   color: #aaaaaa;
