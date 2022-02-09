@@ -91,9 +91,9 @@ const UI = (() => {
         <div class="task-modal-input>
           <form>
             <label for="tname">Task name:</label><br>
-            <input type="text" id="tname" name="tname"><br>
+            <input type="text" id="tname" name="tname" required><br>
             <label for="duedate">Due date:</label><br>
-            <input type="date" id="duedate" name="due-date" value="2022-07-22"><br>
+            <input type="date" id="duedate" name="due-date" value="2022-02-08"><br>
             <label for="cars">Choose a project:</label><br>
               <select name="projects-option" id="projects-option">
                 
@@ -101,16 +101,16 @@ const UI = (() => {
               <p>Select priority:</p>
                 <div id="priority-radio">
                   <div class="low-radio">
-                    <input type="radio" id="low" name="fav_language" value="HTML">
-                    <label for="html">Low</label>
+                    <input type="radio" id="low" name="priority" value="low" required>
+                    <label for="low">Low</label>
                   </div>
                   <div class="mid-radio">
-                    <input type="radio" id="mid" name="fav_language" value="CSS">
-                    <label for="css">Mid</label>
+                    <input type="radio" id="mid" name="priority" value="mid">
+                    <label for="mid">Mid</label>
                   </div>
                   <div class="high-radio">
-                    <input type="radio" id="high" name="fav_language" value="JavaScript">
-                    <label for="javascript">High</label><br>
+                    <input type="radio" id="high" name="priority" value="high">
+                    <label for="high">High</label><br>
                   </div>
                 </div>        
             <input id="submitTask" type="submit" value="Add new task">
@@ -177,6 +177,7 @@ const UI = (() => {
     const span = document.querySelector('.project-close');
 
     btn.addEventListener('click', () => {
+      alert(projects.length);
       modal.style.display = 'block';
       modalContent.classList.add('modal-animation-p');
     });
@@ -186,8 +187,8 @@ const UI = (() => {
       modalContent.classList.remove('modal-animation-p');
     });
 
-    window.addEventListener('click', () => {
-      if (event.target == modal) {
+    window.addEventListener('click', (e) => {
+      if (e.target == modal) {
         modal.style.display = 'none';
         modalContent.classList.remove('modal-animation-p');
       }
@@ -240,20 +241,78 @@ const UI = (() => {
     });
   };
 
+  const displayTask = () => {
+    let i = 0;
+    let b = 0;
+    let c = 0;
+    let d = 0;
+    let e = 0;
+
+    window.addEventListener('click', (e) => {
+      if (e.path[1].classList.contains('project-list')) {
+        let index = e.path[0].getAttribute('data-index');
+        console.log(index);
+        const pageContent = document.querySelector('.page-content');
+        if (projects[index].getTaskList()[0] !== undefined) {
+          for (let m = 0; m <= projects[index].getTaskList().length - 1; m++) {
+            function display(n) {
+              const task = document.createElement('div');
+              task.innerHTML = `
+            <div class="task-wrapper">
+              <h3>${projects[index].getTitle()}</h3>
+              <p>${projects[index].getTaskList()[n].getName()}</p>
+              <p>${projects[index].getTaskList()[n].getDate()}</p>
+              <p>${projects[index].getTaskList()[n].getPriority()}</p>
+              <input type="checkbox" id="done" name="done" value="${projects[
+                index
+              ]
+                .getTaskList()
+                [n].getDone()}">
+              
+            </div>
+          `;
+              pageContent.appendChild(task);
+            }
+
+            if (index == 0) {
+              display(i);
+              i++;
+            } else if (index == 1) {
+              display(b);
+              b++;
+            } else if (index == 2) {
+              display(c);
+              c++;
+            } else if (index == 3) {
+              display(d);
+              d++;
+            } else if (index == 4) {
+              display(e);
+              e++;
+            }
+          }
+        } else {
+          alert(
+            `This project (${projects[
+              index
+            ].getTitle()}) contains no tasks yet. Create one by clicking on the blue button above.`
+          );
+        }
+      }
+    });
+  };
+
   const renderUI = () => {
     createHeader();
     createPage();
-
     createTaskModal();
     taskModalListener();
-
     createProjectModal();
     projectModalListener();
-
     displayProjectList();
   };
 
-  return { renderUI, addToProjectList };
+  return { renderUI, addToProjectList, displayTask };
 })();
 
 export { UI };

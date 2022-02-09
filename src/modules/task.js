@@ -1,10 +1,47 @@
-const createTodo = (name, done, date, priority) => {
-  const getName = () => name;
-  const getDone = () => done;
-  const getDate = () => date;
-  const getPriority = () => priority;
+import { projects } from './project';
 
-  return { getName, getDone, getDate, getPriority };
+const createTodo = (name, date, option, priority, done) => {
+  const getName = () => name;
+  const getDate = () => date;
+  const getOption = () => option;
+  const getPriority = () => priority;
+  const getDone = () => done;
+
+  return { getName, getDate, getOption, getPriority, getDone };
 };
 
-export { createTodo };
+function addTask() {
+  const modal = document.querySelector('#taskModal');
+
+  const newTaskBtn = document.querySelector('#submitTask');
+  const taskName = document.querySelector('#tname');
+  const taskDate = document.querySelector('#duedate');
+  const taskOption = document.querySelector('#projects-option');
+
+  newTaskBtn.addEventListener('click', clickAddTask);
+
+  function clickAddTask() {
+    const taskPriority = document.querySelector(
+      'input[type=radio][name=priority]:checked'
+    );
+    const newTask = createTodo(
+      taskName.value,
+      taskDate.value,
+      taskOption.value,
+      taskPriority.value,
+      false
+    );
+    for (const project of projects) {
+      if (project.getTitle() == newTask.getOption()) {
+        project.setTaskList(newTask);
+
+        // const displayOnAdd = document.querySelector('.project-list').children;
+        // displayOnAdd.item(0).click();
+      }
+    }
+
+    modal.style.display = 'none';
+  }
+}
+
+export { createTodo, addTask };

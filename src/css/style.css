@@ -81,7 +81,7 @@ body {
   box-shadow: inset 1px 0px 14px -1px rgba(0, 0, 0, 0.75);
   background-size: cover;
   background-position: top;
-  flex: 1 0 auto;
+  width: 100%;
 }
 
 .add-task-button {
@@ -334,4 +334,38 @@ body {
 .project-list .delete-project:hover {
   color: #fc3246;
   font-weight: 600;
+}
+
+.page-content {
+  padding: 30px 50px 30px 120px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: flex-start;
+  gap: 25px;
+}
+
+.task-wrapper {
+  margin: 5px;
+  background: white;
+  display: flex;
+  width: fit-content;
+  -webkit-box-shadow: 1px 4px 10px 7px rgba(0, 0, 0, 0.247);
+  box-shadow: 1px 4px 10px 7px rgba(0, 0, 0, 0.24);
+  padding: 10px 20px 10px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.task-wrapper p {
+  margin: 10px;
+}
+
+.task-wrapper h3 {
+  background: #050036;
+  font-size: 16px;
+  color: #fff;
+  border-radius: 8px 2px 8px 2px;
+  padding: 8px;
 }

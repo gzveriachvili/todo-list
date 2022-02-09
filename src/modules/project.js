@@ -1,15 +1,18 @@
-const Project = (title, taskList) => {
+const Project = (title, taskList = []) => {
   const getTitle = () => title;
-  const setTitle = (value) => (name = value);
+  const setTitle = (value) => (title = value);
+  const setTaskList = (object) => {
+    taskList.push(object);
+  };
   const getTaskList = () => taskList;
-  return { getTitle, setTitle, getTaskList };
+  return { getTitle, setTitle, getTaskList, setTaskList };
 };
 
 let projects = [];
 let canInput = false;
 
-const defaultProject1 = Project('Default 1', ['task1, task2']);
-const defaultProject2 = Project('Default 2', ['task1']);
+const defaultProject1 = Project('Default 1');
+const defaultProject2 = Project('Default 2');
 projects.push(defaultProject1);
 projects.push(defaultProject2);
 
@@ -21,7 +24,7 @@ function addNewProject() {
   const createProject = () => {
     newProjectBtn.addEventListener('click', clickAdd);
     function clickAdd() {
-      const newProject = Project(projectInput.value, ['task1', 'task2']);
+      const newProject = Project(projectInput.value);
       if (projectInput.value !== '') {
         projects.push(newProject);
         projectInput.value = '';
@@ -51,9 +54,6 @@ function displayProjectOptions() {
 function deleteProjectOption(index) {
   const projectOption = document.querySelector('#projects-option');
   for (const option of projectOption) {
-    // The option items have their own data attribute,
-    // which then if matches with the data attribute from the project listen upon deletion,
-    // the option gets deleted as well from the task input modal.
     if (option.getAttribute('data-index-option') == index) {
       projectOption.removeChild(option);
     }
@@ -67,8 +67,6 @@ function deleteProject() {
     if (item.classList.contains('delete-project')) {
       let itemIndex = item.getAttribute('data-index-delete');
       projects[itemIndex] = null;
-      console.log(itemIndex);
-      console.log(projects);
       projectList.removeChild(e.path[1]);
       deleteProjectOption(itemIndex);
     }

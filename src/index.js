@@ -4,7 +4,7 @@ import {
   deleteProject,
   displayProjectOptions,
 } from './modules/project';
-import { createTodo } from './modules/task';
+import { addTask, createTodo } from './modules/task';
 
 UI.renderUI();
 
@@ -15,3 +15,7 @@ UI.addToProjectList();
 deleteProject();
 
 displayProjectOptions();
+
+addTask();
+
+UI.displayTask();
