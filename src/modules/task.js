@@ -37,6 +37,9 @@ function addTask() {
 
         // const displayOnAdd = document.querySelector('.project-list').children;
         // displayOnAdd.item(0).click();
+        alert(
+          'Now click on the corresponding project to view the added task(s)'
+        );
       }
     }
 
