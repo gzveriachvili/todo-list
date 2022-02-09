@@ -30,7 +30,6 @@ function addNewProject() {
         projectInput.value = '';
         modal.style.display = 'none';
         canInput = true;
-        console.log(projects);
       } else {
         alert("Project name can't be empty");
         canInput = false;

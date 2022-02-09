@@ -177,7 +177,6 @@ const UI = (() => {
     const span = document.querySelector('.project-close');
 
     btn.addEventListener('click', () => {
-      alert(projects.length);
       modal.style.display = 'block';
       modalContent.classList.add('modal-animation-p');
     });
@@ -247,23 +246,23 @@ const UI = (() => {
     let c = 0;
     let d = 0;
     let e = 0;
-
+    let dataIndexCount = 0;
     window.addEventListener('click', (e) => {
       if (e.path[1].classList.contains('project-list')) {
         let index = e.path[0].getAttribute('data-index');
-        console.log(index);
+
         const pageContent = document.querySelector('.page-content');
         if (projects[index].getTaskList()[0] !== undefined) {
           for (let m = 0; m <= projects[index].getTaskList().length - 1; m++) {
             function display(n) {
               const task = document.createElement('div');
               task.innerHTML = `
-            <div class="task-wrapper">
+            <div class="task-wrapper" data-index-task="${dataIndexCount}">
               <h3>${projects[index].getTitle()}</h3>
               <p>${projects[index].getTaskList()[n].getName()}</p>
               <p>${projects[index].getTaskList()[n].getDate()}</p>
               <p>${projects[index].getTaskList()[n].getPriority()}</p>
-              <input type="checkbox" id="done" name="done" value="${projects[
+              <input type="checkbox" class="checkbox-class" id="done" name="done" value="${projects[
                 index
               ]
                 .getTaskList()
@@ -272,6 +271,7 @@ const UI = (() => {
             </div>
           `;
               pageContent.appendChild(task);
+              dataIndexCount++;
             }
 
             if (index == 0) {
@@ -302,6 +302,20 @@ const UI = (() => {
     });
   };
 
+  const removeTask = () => {
+    const pageContent = document.querySelector('.page-content');
+    window.addEventListener('click', (e) => {
+      if (e.path[0].classList.contains('checkbox-class')) {
+        console.log(e.path[0].checked);
+        if (e.path[0].checked) {
+          pageContent.removeChild(e.path[2]);
+          let n = e.path[1].getAttribute('data-index-task');
+          projects[n].getTaskList()[n] = null;
+        }
+      }
+    });
+  };
+
   const renderUI = () => {
     createHeader();
     createPage();
@@ -312,7 +326,7 @@ const UI = (() => {
     displayProjectList();
   };
 
-  return { renderUI, addToProjectList, displayTask };
+  return { renderUI, addToProjectList, displayTask, removeTask };
 })();
 
 export { UI };

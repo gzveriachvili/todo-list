@@ -369,3 +369,7 @@ body {
   border-radius: 8px 2px 8px 2px;
   padding: 8px;
 }
+
+.task-wrapper [type='checkbox']:hover {
+  cursor: pointer;
+}

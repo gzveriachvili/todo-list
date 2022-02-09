@@ -19,3 +19,4 @@ displayProjectOptions();
 addTask();
 
 UI.displayTask();
+UI.removeTask();
