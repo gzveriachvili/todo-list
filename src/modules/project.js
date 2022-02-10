@@ -24,8 +24,8 @@ function addNewProject() {
   const createProject = () => {
     newProjectBtn.addEventListener('click', clickAdd);
     function clickAdd() {
-      const newProject = Project(projectInput.value);
       if (projectInput.value !== '') {
+        const newProject = Project(projectInput.value, []);
         projects.push(newProject);
         projectInput.value = '';
         modal.style.display = 'none';
@@ -55,6 +55,9 @@ function deleteProjectOption(index) {
   for (const option of projectOption) {
     if (option.getAttribute('data-index-option') == index) {
       projectOption.removeChild(option);
+      for (let i = 0; i <= projects.length - 1; i++) {
+        console.log('Projects after deletion: ', projects[i].getTitle());
+      }
     }
   }
 }
@@ -65,7 +68,9 @@ function deleteProject() {
     let item = e.path[0];
     if (item.classList.contains('delete-project')) {
       let itemIndex = item.getAttribute('data-index-delete');
-      projects[itemIndex] = null;
+      projects[itemIndex].setTitle(null);
+      //projects[itemIndex].setTaskList(null);
+      //console.log(projects[2].getTitle());
       projectList.removeChild(e.path[1]);
       deleteProjectOption(itemIndex);
     }

@@ -33,8 +33,8 @@ function addTask() {
     );
     for (const project of projects) {
       if (project.getTitle() == newTask.getOption()) {
+        console.log(project.getTitle());
         project.setTaskList(newTask);
-
         // const displayOnAdd = document.querySelector('.project-list').children;
         // displayOnAdd.item(0).click();
         alert(
